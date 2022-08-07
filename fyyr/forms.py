@@ -4,7 +4,6 @@ from xml.dom import ValidationErr
 from flask_wtf import Form
 from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField
 from wtforms.validators import DataRequired, AnyOf, URL
-import re
 
 genres_choice = [
     ('Alternative', 'Alternative'),
@@ -27,24 +26,6 @@ genres_choice = [
     ('Soul', 'Soul'),
     ('Other', 'Other'),
 ]
-
-
-def validate_facebook(form, field):
-    if not 'facebook.com' in field.data:
-        raise ValidationErr("Invalid facebook link.")
-
-
-def validate_phone(form, field):
-    rule = re.compile(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$")
-    if not re.search(rule, field.data):
-        raise ValidationErr("Phone number not valid")
-
-
-def validate_genres(form, field):
-    genres_values = [choice[1] for choice in genres_choice]
-    for value in field.data:
-        if value not in genres_values:
-            raise ValidationErr('Provide valid genres values')
 
 
 class ShowForm(Form):
@@ -134,7 +115,7 @@ class VenueForm(Form):
         'address', validators=[DataRequired()]
     )
     phone = StringField(
-        'phone', validate_phone
+        'phone'
     )
     image_link = StringField(
         'image_link'
@@ -159,6 +140,9 @@ class VenueForm(Form):
 
 
 class ArtistForm(Form):
+    def validate_facebook(form, field):
+        if not 'facebook.com' in field.data:
+            raise ValidationErr("Invalid facebook link.")
 
     name = StringField(
         'name', validators=[DataRequired()]
@@ -224,7 +208,7 @@ class ArtistForm(Form):
     )
     phone = StringField("phone")
     image_link = StringField(
-        'image_link', validate_phone
+        'image_link'
     )
     genres = SelectMultipleField(
         'genres', validators=[DataRequired()],

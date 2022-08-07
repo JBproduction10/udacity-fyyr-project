@@ -87,11 +87,8 @@ endblock %} {% block content %}
 <a href="/artists/{{ artist.id }}/edit"
   ><button class="btn btn-primary btn-lg">Edit</button></a
 >
-<button
-  id="button"
-  class="btn btn-danger delete-button"
-  data-id="{{ artist.id }}"
->
+
+<button id="button" class="btn btn-danger" data-id="{{ artist.id }}">
   Delete
 </button>
 
@@ -99,11 +96,13 @@ endblock %} {% block content %}
   const buttonDelete = document.getElementById("button");
   buttonDelete.onclick = function (e) {
     console.log("event", e);
-    const id = e.target.dataset["id"];
-    fetch("/artists/" + id, {
+    const artistId = e.target.dataset["id"];
+    fetch("/artists/" + artistId + "/delete", {
       method: "DELETE",
     }).then(function (response) {
       return response.json();
+      const item = e.target.parentElement;
+      item.remove();
     });
   };
 </script>

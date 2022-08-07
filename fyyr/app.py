@@ -1,15 +1,10 @@
 #----------------------------------------------------------------------------#
 # Imports
 #----------------------------------------------------------------------------#
-import sys
-import json
 import dateutil.parser
 import babel
 from sqlalchemy import func
 from flask import Flask, render_template, request, Response, flash, redirect, url_for
-from flask_moment import Moment
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 import logging
 from logging import Formatter, FileHandler
 from flask_wtf import Form
@@ -101,7 +96,7 @@ def create_venue_submission():
     return venue.create_venue_submission()
 
 
-@app.route('/venues/<int:venue_id>', methods=['DELETE'])
+@app.route('/venues/<int:venue_id>/delete', methods=['DELETE'])
 def delete_venue(venue_id):
     return venue.delete_venue(venue_id)
 
@@ -128,6 +123,8 @@ def show_artist(artist_id):
     # completed: replace with real artist data from the artist table, using artist_id
     # artist_query = db.session.query(Artist).get(artist_id)
     return artist.show_artist(artist_id)
+
+
 #  Update
 #  ----------------------------------------------------------------
 
@@ -170,7 +167,7 @@ def create_artist_submission():
     return artist.create_artist_submission()
 
 
-@app.route('/artists/<artist_id>', methods=['DELETE'])
+@app.route('/artists/<int:artist_id>/delete', methods=['DELETE'])
 def delete_artist(artist_id):
     return artist.delete_artist(artist_id)
 

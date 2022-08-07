@@ -159,7 +159,7 @@ def delete_venue(venue_id):
     # completed: Complete this endpoint for taking a venue_id, and using
     # SQLAlchemy ORM to delete a record. Handle cases where the session commit could fail.
     # error = False
-    venue = Venue.query.get(venue_id)
+    venue = Venue.query.filter_by(id=venue_id)
     try:
         # venue = Venue.query.get(venue_id)
         db.session.delete(venue)

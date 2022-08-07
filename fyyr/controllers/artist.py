@@ -1,7 +1,7 @@
 from model import Shows, Venue, Artist
 from initApp import db
 from sqlalchemy import func
-from flask import Flask, render_template, request, Response, flash, redirect, url_for
+from flask import render_template, request, Response, flash, redirect, url_for
 from forms import *
 
 
@@ -9,18 +9,6 @@ def artists():
     artists = db.session.query(Artist).all()
 
     return render_template('pages/artists.html', artists=artists)
-    # artists = []
-    # try:
-    #     all_artist = Artist.query.all()
-    # except Exception as e:
-    #     db.session.rollback()
-    # finally:
-    #     db.session.close()
-    # data = []
-    # if all_artist:
-    #     for artist in all_artist:
-    #         data.append({"id": artist.id, "name": artist.name})
-    # return render_template('pages/artists.html', artists=artists)
 
 
 def search_artists():
